@@ -57,9 +57,8 @@ RUN echo "Downloading FSL ..." \
 # Apply patch by Caspar van Leeuwen, reported in the FSL mail archives 
 # (https://www.jiscmail.ac.uk/cgi-bin/webadmin?A2=FSL;2b74023.2006)
 RUN echo "Applying patch ..." \
-    && sed -i 's;device_vector.h;thrust/device_vector.h;g \
-               s;host_vector.h;thrust/host_vector.h;g' /opt/fsl-6.0.4/src/fdt/CUDA/*.cu* \
-    && sed -i "s;-I\${INC_CUDA}/thrust;;g" src/fdt/Makefile
+    && sed -i 's;device_vector.h;thrust/device_vector.h;g; s;host_vector.h;thrust/host_vector.h;g' /opt/fsl-6.0.4/src/fdt/CUDA/*.cu* \
+    && sed -i "s;-I\${INC_CUDA}/thrust;;g" /opt/fsl-6.0.4/src/fdt/Makefile
 
 RUN echo "Building FSL ..." \
     && cd /opt/fsl-6.0.4/ \
@@ -70,7 +69,7 @@ RUN echo "Building FSL ..." \
     && sed -i "s;/home/fs0/cowboy/var/caper_linux_64-gcc4.4/VTK7/lib;/opt/vtk-7.0.0/lib;g" config/buildSettings.mk \
     && sed -i "s;VTKSUFFIX = -7.0;VTKSUFFIX = -7.0;g" config/buildSettings.mk \
     && sed -i "s;/Users/cowboy/VTK7/lib;/opt/vtk-7.0.0/lib;g" config/buildSettings.mk \
-    && sed -i "s;${LIBRT};${LIBRT} -Wl,-rpath,${VTKDIR_LIB};g" src/mist/Makefile \
+    && sed -i 's;${LIBRT};${LIBRT} -Wl,-rpath,${VTKDIR_LIB};g' src/mist/Makefile \
     && ./build 
 
 RUN ln -s /opt/fsl-6.0.4/bin/eddy_cuda10.1 /opt/fsl-6.0.4/bin/eddy_cuda
