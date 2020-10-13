@@ -1,7 +1,7 @@
 # Dockerfile for building fsl from source
-# Build with CUDA 10.1
+# Build with CUDA 10.2
 
-FROM nvidia/cuda:10.1-devel-centos7
+FROM nvidia/cuda:10.2-devel-centos7
 
 ENV FSLDIR="/opt/fsl-6.0.4" \
     PATH="/opt/fsl-6.0.4/bin:$PATH"
@@ -62,7 +62,7 @@ RUN echo "Applying patch ..." \
 
 RUN echo "Building FSL ..." \
     && cd /opt/fsl-6.0.4/ \
-    && sed -i "s;9.1;10.1;g" config/buildSettings.mk \
+    && sed -i "s;9.1;10.2;g" config/buildSettings.mk \
     && sed -i "s;/opt/cuda-;/usr/local/cuda-;g" config/buildSettings.mk \
     && sed -i "s;/Users/cowboy/VTK7/include/vtk-7.0;/opt/vtk-7.0.0/include/vtk-7.0;g" config/buildSettings.mk \
     && sed -i "s;/home/fs0/cowboy/var/caper_linux_64-gcc4.4/VTK7/include/vtk-7.0;/opt/vtk-7.0.0/include/vtk-7.0;g" config/buildSettings.mk \
@@ -72,4 +72,4 @@ RUN echo "Building FSL ..." \
     && sed -i 's;${LIBRT};${LIBRT} -Wl,-rpath,${VTKDIR_LIB};g' src/mist/Makefile \
     && ./build 
 
-RUN ln -s /opt/fsl-6.0.4/bin/eddy_cuda10.1 /opt/fsl-6.0.4/bin/eddy_cuda
+RUN ln -s /opt/fsl-6.0.4/bin/eddy_cuda10.2 /opt/fsl-6.0.4/bin/eddy_cuda
