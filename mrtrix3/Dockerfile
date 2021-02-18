@@ -10,6 +10,7 @@ RUN apt-get update && \
         git \
         g++ \
         python-is-python3 \
+        python3-distutils \
         libeigen3-dev \
         zlib1g-dev \
         libqt5opengl5-dev \
